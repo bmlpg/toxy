@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,8 @@ namespace Toxy.Test
         [Test]
         public void TestParseTextFromWord()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetWordPath("SampleDoc.docx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetWordPath("SampleDoc.docx"));
+            ParserContext context = new ParserContext("SampleDoc.docx", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string doc = parser.Parse();
 
@@ -32,7 +34,8 @@ namespace Toxy.Test
         [Test]
         public void TestParseSimpleDocumentFromWord()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetWordPath("SampleDoc.docx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetWordPath("SampleDoc.docx"));
+            ParserContext context = new ParserContext("SampleDoc.docx", fileContent);
             IDocumentParser parser = ParserFactory.CreateDocument(context);
             ToxyDocument doc = parser.Parse();
             Assert.AreEqual(7,doc.Paragraphs.Count);
@@ -47,7 +50,8 @@ namespace Toxy.Test
         [Test]
         public void TestParseDocumentWithTable()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetWordPath("simple-table.docx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetWordPath("simple-table.docx"));
+            ParserContext context = new ParserContext("simple-table.docx", fileContent);
             IDocumentParser parser = ParserFactory.CreateDocument(context);
             ToxyDocument doc = parser.Parse();
             Assert.AreEqual(8, doc.Paragraphs.Count);

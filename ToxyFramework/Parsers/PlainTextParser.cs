@@ -31,19 +31,21 @@ namespace Toxy.Parsers
 
         public virtual string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File "+Context.Path+" is not found");
-
+            */
+            
             StreamReader sr = null;
             try
             {
                 if (Context.Encoding == null)
                 {
-                    sr = new StreamReader(Context.Path, true);
+                    sr = new StreamReader(new MemoryStream(Context.FileContent), true);
                 }
                 else
                 {
-                    sr = new StreamReader(Context.Path, Context.Encoding);
+                    sr = new StreamReader(new MemoryStream(Context.FileContent), Context.Encoding);
                 }
                 string line = sr.ReadLine();
                 int i = 0;

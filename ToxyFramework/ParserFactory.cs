@@ -60,8 +60,8 @@ namespace Toxy
             typeOOXML.Add(typeof(OOXMLMetadataParser));
             parserMapping.Add(".pubx", typeOOXML);
             parserMapping.Add(".vsdx", typeOOXML);
-
-/*            var typeDoc = new List<Type>();
+/*
+            var typeDoc = new List<Type>();
             typeDoc.Add(typeof(Word2003DocumentParser));
             typeDoc.Add(typeof(Word2003TextParser));
             typeDoc.Add(typeof(OLE2MetadataParser));
@@ -136,7 +136,7 @@ namespace Toxy
         }
         static object CreateObject(ParserContext context, Type itype, string operationName)
         {
-            string ext = GetFileExtention(context.Path);
+            string ext = GetFileExtention(context.FileName);
             var types = parserMapping[ext];
             object obj = null;
             bool isFound = false;

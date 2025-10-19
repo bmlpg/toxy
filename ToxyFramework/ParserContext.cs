@@ -6,17 +6,20 @@ namespace Toxy
 {
     public class ParserContext
     {
-        public ParserContext(string path):this(path, null)
+        public ParserContext(string fileName, byte[] fileContent):this(fileName, fileContent, null)
         { 
         
         }
-        public ParserContext(string path, Encoding encoding)
+        public ParserContext(string fileName, byte[] fileContent, Encoding encoding)
         {
-            this.Path = path;
+            this.FileName = fileName;
+            this.FileContent = fileContent;
             this.Properties = new Dictionary<string, string>();
             this.Encoding = encoding;
         }
-        public string Path { get; set; }
+        public string FileName { get; set; }
+
+        public byte[] FileContent { get; set; }
         public Encoding Encoding { get; set; }
         
         public Dictionary<string, string> Properties { get; set; }

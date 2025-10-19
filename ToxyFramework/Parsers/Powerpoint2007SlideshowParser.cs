@@ -16,12 +16,14 @@ namespace Toxy.Parsers
         }
         public ToxySlideshow Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             ToxySlideshow ss = new ToxySlideshow();
 
-            using (PresentationDocument ppt = PresentationDocument.Open(Context.Path, false))
+            using (PresentationDocument ppt = PresentationDocument.Open(new MemoryStream(Context.FileContent), false))
             {
                 // Get the relationship ID of the first slide.
                 PresentationPart part = ppt.PresentationPart;
@@ -68,10 +70,12 @@ namespace Toxy.Parsers
 
         public ToxySlide Parse(int slideIndex)
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
-            using (PresentationDocument ppt = PresentationDocument.Open(Context.Path, false))
+            using (PresentationDocument ppt = PresentationDocument.Open(new MemoryStream(Context.FileContent), false))
             {
                 // Get the relationship ID of the first slide.
                 PresentationPart part = ppt.PresentationPart;

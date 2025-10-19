@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,8 @@ namespace Toxy.Test
          {
              string path = TestDataSample.GetFilePath("countrylist.csv", null);
 
-            ParserContext context=new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("countrylist.csv", fileContent);
             context.Properties.Add("ExtractHeader", "1");
             ISpreadsheetParser parser = (ISpreadsheetParser)ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss= parser.Parse();
@@ -33,8 +35,9 @@ namespace Toxy.Test
          public void TestParseIndexOutOfRange()
          {
              string path = TestDataSample.GetFilePath("countrylist.csv", null);
-             ParserContext context = new ParserContext(path);
-             context.Properties.Add("HasHeader", "1");
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("countrylist.csv", fileContent);
+            context.Properties.Add("HasHeader", "1");
              ISpreadsheetParser parser = (ISpreadsheetParser)ParserFactory.CreateSpreadsheet(context);
              try
              {

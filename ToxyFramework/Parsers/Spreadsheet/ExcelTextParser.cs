@@ -20,10 +20,12 @@ namespace Toxy.Parsers
         }
         public override string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
-            IWorkbook workbook = WorkbookFactory.Create(Context.Path);
+            IWorkbook workbook = WorkbookFactory.Create(new MemoryStream(Context.FileContent));
 
             bool extractHeaderFooter = false;
             if (Context.Properties.ContainsKey("IncludeHeaderFooter"))
@@ -49,17 +51,17 @@ namespace Toxy.Parsers
             if (workbook is XSSFWorkbook)
             {
                 XSSFExcelExtractor extractor = new XSSFExcelExtractor((XSSFWorkbook)workbook);
-                extractor.SetIncludeHeadersFooters(extractHeaderFooter);
-                extractor.SetIncludeCellComments(includeComment);
-                extractor.SetIncludeSheetNames(includeSheetNames);
-                extractor.SetFormulasNotResults(!showCalculatedResult);
+                extractor.IncludeHeadersFooters = extractHeaderFooter;
+                extractor.IncludeCellComments = includeComment;
+                extractor.IncludeSheetNames = includeSheetNames;
+                extractor.FormulasNotResults = !showCalculatedResult;
                 return extractor.Text;
             }
             else //if (workbook is HSSFWorkbook)
             {
                 ExcelExtractor extractor = new ExcelExtractor((HSSFWorkbook)workbook);
-                extractor.IncludeHeaderFooter = extractHeaderFooter;
-                extractor.IncludeCellComments= includeComment;
+                extractor.IncludeHeadersFooters = extractHeaderFooter;
+                extractor.IncludeCellComments = includeComment;
                 extractor.IncludeSheetNames = includeSheetNames;
                 extractor.FormulasNotResults = !showCalculatedResult;
                 return extractor.Text;

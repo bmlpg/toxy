@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,8 @@ namespace Toxy.Test
         }
         public void BaseTestExtractSheetFooter(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.IsNull(ss.Tables[0].PageFooter);
@@ -26,7 +28,8 @@ namespace Toxy.Test
         }
         public void BaseTestWithoutHeader(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.IsNull(ss.Tables[0].PageHeader);
@@ -36,7 +39,8 @@ namespace Toxy.Test
         }
         public void BaseTestWithHeaderRow(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             parser.Context.Properties.Add("HasHeader", "1");
             ToxySpreadsheet ss = parser.Parse();
@@ -65,7 +69,8 @@ namespace Toxy.Test
 
         public void BaseTestSlicedTableAndRow(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             
@@ -82,7 +87,8 @@ namespace Toxy.Test
 
         public void BaseTestExtractSheetHeader(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.IsNull(ss.Tables[0].PageHeader);
@@ -94,7 +100,8 @@ namespace Toxy.Test
         }
         public void BaseTestFillBlankCells(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.AreEqual(1, ss.Tables[0][0].Length);
@@ -115,7 +122,8 @@ namespace Toxy.Test
 
         public void BaseTestExcelContent(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.AreEqual(3, ss.Tables.Count);
@@ -153,7 +161,8 @@ namespace Toxy.Test
 
         public void BaseTestExcelComment(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.AreEqual(3, ss.Tables.Count);
@@ -168,7 +177,8 @@ namespace Toxy.Test
 
         public void BaseTestExcelFormatedString(string filename)
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath(filename));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath(filename));
+            ParserContext context = new ParserContext(filename, fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             ToxySpreadsheet ss = parser.Parse();
             Assert.AreEqual(13, ss.Tables[0].Length);

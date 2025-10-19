@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using NPOI.HPSF;
+using NUnit.Framework;
 
 namespace Toxy.Test
 {
@@ -12,7 +14,8 @@ namespace Toxy.Test
         [Test]
         public void TestExcel2003TextParser()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("Employee.xls"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("Employee.xls"));
+            ParserContext context = new ParserContext("Employee.xls", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string result= parser.Parse();
             Assert.IsNotNull(result);
@@ -22,7 +25,8 @@ namespace Toxy.Test
         [Test]
         public void TestExcel2007TextParser()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            ParserContext context = new ParserContext("WithVariousData.xlsx", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();
             Assert.IsNotNull(result);
@@ -37,7 +41,8 @@ namespace Toxy.Test
         [Test]
         public void TestExcel2007TextParserWithoutComment()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            ParserContext context = new ParserContext("WithVariousData.xlsx", fileContent);
             context.Properties.Add("IncludeComments","0");
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();
@@ -47,7 +52,8 @@ namespace Toxy.Test
         [Test]
         public void TestExcel2007TextParserWithoutSheetNames()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            ParserContext context = new ParserContext("WithVariousData.xlsx", fileContent);
             context.Properties.Add("IncludeSheetNames", "0");
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();
@@ -57,7 +63,8 @@ namespace Toxy.Test
         [Test]
         public void TestExcel2007TextParserWithHeaderFooter()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("WithVariousData.xlsx"));
+            ParserContext context = new ParserContext("WithVariousData.xlsx", fileContent);
             context.Properties.Add("IncludeHeaderFooter", "1");
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();

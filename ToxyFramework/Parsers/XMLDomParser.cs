@@ -15,11 +15,13 @@ namespace Toxy.Parsers
 
         public ToxyDom Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(Context.Path);
+            doc.Load(new MemoryStream(Context.FileContent));
 
             ToxyNode rootNode = ConvertToToxyNode(doc.DocumentElement);
             ToxyDom dom = new ToxyDom();

@@ -15,11 +15,13 @@ namespace Toxy.Parsers
 
         public override string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             StringBuilder sb = new StringBuilder();
-            using (FileStream stream = File.OpenRead(Context.Path))
+            using (MemoryStream stream = new MemoryStream(Context.FileContent))
             {
                 EMLReader reader = new EMLReader(stream);
                 if (!string.IsNullOrEmpty(reader.From))

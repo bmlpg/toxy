@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 using Toxy.Parsers;
 
@@ -11,8 +12,8 @@ namespace Toxy.Test
         public void TestReadWholeText()
         {
             string path = TestDataSample.GetTextPath("utf8.txt");
-
-            ParserContext context=new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("utf8.txt", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string text= parser.Parse();
 			Assert.AreEqual("hello world"+Environment.NewLine+"a2"+Environment.NewLine+"a3"+Environment.NewLine+"bbb4"+Environment.NewLine, text);
@@ -22,7 +23,8 @@ namespace Toxy.Test
         public void TestParseLineEvent()
         {
             string path = TestDataSample.GetTextPath("utf8.txt");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("utf8.txt", fileContent);
             PlainTextParser parser = (PlainTextParser)ParserFactory.CreateText(context);
             parser.ParseLine += (sender, args) => 
             {

@@ -12,8 +12,8 @@ namespace Toxy.Test
         public void TestParseHtml()
         {
             string path = Path.GetFullPath(TestDataSample.GetHtmlPath("mshome.html"));
-
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("mshome.html", fileContent);
             IDomParser parser = (IDomParser)ParserFactory.CreateDom(context);
             ToxyDom toxyDom = parser.Parse();
 

@@ -14,7 +14,8 @@ namespace Toxy.Test
         public void ReadTextBasicTest()
         {
             string path = Path.GetFullPath(TestDataSample.GetPowerpointPath("testPPT.pptx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("testPPT.pptx", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();
             Assert.IsNotNull(result);

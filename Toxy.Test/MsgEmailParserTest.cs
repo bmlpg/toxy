@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,8 @@ namespace Toxy.Test
         public void HtmlMsg_ReadTextTest()
         {
             string path = TestDataSample.GetEmailPath("Azure pricing and services updates.msg");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Azure pricing and services updates.msg", fileContent);
             var parser = ParserFactory.CreateText(context);
 
             string result=parser.Parse();
@@ -30,7 +32,8 @@ namespace Toxy.Test
         public void PureTextMsg_ReadTextTest()
         {
             string path = TestDataSample.GetEmailPath("raw text mail demo.msg");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("raw text mail demo.msg", fileContent);
             var parser = ParserFactory.CreateText(context);
 
             string result = parser.Parse();
@@ -45,7 +48,8 @@ namespace Toxy.Test
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             string path = TestDataSample.GetEmailPath("Azure pricing and services updates.msg");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Azure pricing and services updates.msg", fileContent);
             var parser = ParserFactory.CreateEmail(context);
 
             var result = parser.Parse();

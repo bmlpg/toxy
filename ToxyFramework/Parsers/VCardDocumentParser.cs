@@ -21,12 +21,15 @@ namespace Toxy.Parsers
 
         public ToxyBusinessCards Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
-
-            string path = Context.Path;
+            */
+            
+            //string path = Context.Path;
+            
             ToxyBusinessCards tbcs = new ToxyBusinessCards();
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamReader sr = new StreamReader(new MemoryStream(Context.FileContent)))
             {
                 while (!sr.EndOfStream)
                 {

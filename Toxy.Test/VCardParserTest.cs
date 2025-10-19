@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.IO;
+using NUnit.Framework;
 
 using Toxy.Parsers;
 
@@ -10,7 +11,8 @@ namespace Toxy.Test
         [Test]
         public void TestRead2Cards()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetVCardPath("RfcAuthors.vcf"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetVCardPath("RfcAuthors.vcf"));
+            ParserContext context = new ParserContext("RfcAuthors.vcf", fileContent);
             VCardDocumentParser parser = ParserFactory.CreateVCard(context);
             var cards= parser.Parse();
             Assert.AreEqual(2, cards.Cards.Count);
@@ -60,7 +62,8 @@ namespace Toxy.Test
         [Test]
         public void TestUTF8Card()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetVCardPath("UnicodeNameSample.vcf"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetVCardPath("UnicodeNameSample.vcf"));
+            ParserContext context = new ParserContext("UnicodeNameSample.vcf", fileContent);
             VCardDocumentParser parser = ParserFactory.CreateVCard(context);
             var cards = parser.Parse();
             Assert.AreEqual(1, cards.Cards.Count);
@@ -78,7 +81,8 @@ namespace Toxy.Test
         public void TestForeignNames()
         {
             string path = TestDataSample.GetVCardPath("PalmAgentSamples.vcf");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("PalmAgentSamples.vcf", fileContent);
             VCardDocumentParser parser = ParserFactory.CreateVCard(context);
             var source = parser.Parse();
             Assert.AreEqual(20,source.Cards.Count);

@@ -17,12 +17,14 @@ namespace Toxy.Parsers
         }
         public override string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             StringBuilder sb = new StringBuilder();
 
-            using (PresentationDocument ppt = PresentationDocument.Open(Context.Path, false))
+            using (PresentationDocument ppt = PresentationDocument.Open(new MemoryStream(Context.FileContent), false))
             {
                 // Get the relationship ID of the first slide.
                 PresentationPart part = ppt.PresentationPart;

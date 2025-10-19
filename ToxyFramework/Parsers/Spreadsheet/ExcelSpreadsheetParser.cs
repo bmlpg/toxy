@@ -16,8 +16,10 @@ namespace Toxy.Parsers
         }
         public ToxySpreadsheet Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             bool hasHeader = false;
             if (Context.Properties.ContainsKey("HasHeader"))
@@ -50,8 +52,8 @@ namespace Toxy.Parsers
                 includeComment = Utility.IsTrue(Context.Properties["IncludeComments"]);
             }
             ToxySpreadsheet ss = new ToxySpreadsheet();
-            ss.Name = Context.Path;
-            IWorkbook workbook = WorkbookFactory.Create(Context.Path);
+            ss.Name = Context.FileName;
+            IWorkbook workbook = WorkbookFactory.Create(new MemoryStream(Context.FileContent));
            
             HSSFDataFormatter formatter = new HSSFDataFormatter();
             for (int i = 0; i < workbook.NumberOfSheets; i++)
@@ -150,8 +152,10 @@ namespace Toxy.Parsers
 
         public ToxyTable Parse(int sheetIndex)
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             bool hasHeader = false;
             if (Context.Properties.ContainsKey("HasHeader"))
@@ -183,7 +187,7 @@ namespace Toxy.Parsers
             {
                 includeComment = Utility.IsTrue(Context.Properties["IncludeComments"]);
             }
-            IWorkbook workbook = WorkbookFactory.Create(Context.Path);
+            IWorkbook workbook = WorkbookFactory.Create(new MemoryStream(Context.FileContent));
 
             HSSFDataFormatter formatter = new HSSFDataFormatter();
             return Parse(workbook, sheetIndex, extractHeader, extractFooter, hasHeader, fillBlankCells, includeComment, formatter);

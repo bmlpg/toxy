@@ -14,7 +14,8 @@ namespace Toxy.Test
         public void ReadTextBasicTest()
         {
             string path = Path.GetFullPath(TestDataSample.GetPowerpointPath("testPPT.pptx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("testPPT.pptx", fileContent);
             ISlideshowParser parser = ParserFactory.CreateSlideshow(context);
             var result = parser.Parse();
             Assert.AreEqual(3, result.Slides.Count);
@@ -34,7 +35,8 @@ namespace Toxy.Test
         public void ReadTextBySlideIndex()
         {
             string path = Path.GetFullPath(TestDataSample.GetPowerpointPath("testPPT.pptx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("testPPT.pptx", fileContent);
             ISlideshowParser parser = ParserFactory.CreateSlideshow(context);
             var result = parser.Parse(1);
             Assert.AreEqual(6, result.Texts.Count);

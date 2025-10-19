@@ -27,7 +27,7 @@ namespace Toxy.Parsers
         {
                 StringBuilder result = new StringBuilder();
 
-                using (var stream = File.OpenRead(this.Context.Path))
+                using (var stream = new MemoryStream(this.Context.FileContent))
                 using (var reader = new Storage.Message(stream))
                 {
                     if (reader.Sender != null)

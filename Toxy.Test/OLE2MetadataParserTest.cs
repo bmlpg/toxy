@@ -14,13 +14,15 @@ namespace Toxy.Test
         public void TestWord()
         {
             string path = Path.GetFullPath(TestDataSample.GetOLE2Path("TestEditTime.doc"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("TestEditTime.doc", fileContent);
             IMetadataParser parser = ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(18, x.Count);
 
             path = Path.GetFullPath(TestDataSample.GetOLE2Path("TestChineseProperties.doc"));
-            context = new ParserContext(path);
+            fileContent = File.ReadAllBytes(path);
+            context = new ParserContext("TestChineseProperties.doc", fileContent);
             parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             x = parser.Parse();
             Assert.AreEqual(18, x.Count);
@@ -31,7 +33,8 @@ namespace Toxy.Test
         public void TestExcelFile()
         {
             string path = Path.GetFullPath(TestDataSample.GetExcelPath("comments.xls"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("comments.xls", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(8, x.Count);
@@ -41,7 +44,8 @@ namespace Toxy.Test
         public void TestPowerPoint()
         {
             string path = Path.GetFullPath(TestDataSample.GetOLE2Path("Test_Humor-Generation.ppt"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Test_Humor-Generation.ppt", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(8, x.Count);
@@ -51,7 +55,8 @@ namespace Toxy.Test
         public void TestCorelDrawFile()
         {
             string path = Path.GetFullPath(TestDataSample.GetOLE2Path("TestCorel.shw"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("TestCorel.shw", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(6, x.Count);
@@ -62,7 +67,8 @@ namespace Toxy.Test
         public void TestSolidWorksFile()
         {
             string path = Path.GetFullPath(TestDataSample.GetOLE2Path("TestSolidWorks.sldprt"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("TestSolidWorks.sldprt", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(10, x.Count);

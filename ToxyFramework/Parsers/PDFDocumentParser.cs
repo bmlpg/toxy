@@ -17,13 +17,15 @@ namespace Toxy.Parsers
 
         public ToxyDocument Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             ToxyDocument rdoc = new ToxyDocument();
             ITextExtractionStrategy its = new LocationTextExtractionStrategy();
 
-            using (PdfDocument reader = new PdfDocument(new PdfReader(this.Context.Path)))
+            using (PdfDocument reader = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
             {
                 for (int i = 1; i <= reader.GetNumberOfPages(); i++)
                 {

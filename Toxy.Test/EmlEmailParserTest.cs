@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,8 @@ namespace Toxy.Test
         public void ReadEmlTest()
         {
             string path = TestDataSample.GetEmailPath("test.eml");
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("test.eml", fileContent);
             IEmailParser parser = ParserFactory.CreateEmail(context);
             ToxyEmail email = parser.Parse();
             Assert.IsNotNull(email.From);

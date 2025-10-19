@@ -33,8 +33,10 @@ namespace Toxy.Parsers
 
         public ToxySpreadsheet Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             bool extractHeader=false;
             if (Context.Properties.ContainsKey("ExtractHeader"))
@@ -57,11 +59,11 @@ namespace Toxy.Parsers
             {
                 if (Context.Encoding == null)
                 {
-                    sr = new StreamReader(Context.Path, true);
+                    sr = new StreamReader(new MemoryStream(Context.FileContent), true);
                 }
                 else
                 {
-                    sr = new StreamReader(Context.Path, true);
+                    sr = new StreamReader(new MemoryStream(Context.FileContent), true);
                 }
                 var reader=new CsvReader(sr, CultureInfo.InvariantCulture);
                 if (extractHeader)

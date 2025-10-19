@@ -16,10 +16,12 @@ namespace Toxy.Parsers
         }
         public string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
-            using (PdfDocument reader = new PdfDocument(new PdfReader(this.Context.Path)))
+            using (PdfDocument reader = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
             {
                 StringBuilder text = new StringBuilder();
 

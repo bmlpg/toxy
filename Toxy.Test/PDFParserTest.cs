@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Toxy.Parsers;
@@ -18,7 +19,9 @@ namespace Toxy.Test
         public void TestParsePlainTextFromSample1()
         {
             string path = TestDataSample.GetPdfPath("Sample1.PDF");
-            var parser = new PDFTextParser(new ParserContext(path));
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Sample1.PDF", fileContent);
+            var parser = new PDFTextParser(context);
             string result = parser.Parse();
             Assert.IsTrue(result.StartsWith("LA MARCHE"));
             ContainText(result, "Toute discussion stratégique sur nos actions nécessite un rappel de ce que nous avons fait en");
@@ -31,7 +34,9 @@ namespace Toxy.Test
         public void TestParseToxyDocumentFromPDF()
         {
             string path = TestDataSample.GetPdfPath("Sample1.PDF");
-            var parser = new PDFDocumentParser(new ParserContext(path));
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Sample1.PDF", fileContent);
+            var parser = new PDFDocumentParser(context);
             var result = parser.Parse();
             Assert.AreEqual(1474, result.Paragraphs.Count);
             Assert.AreEqual("LA MARCHE MONDIALE DES FEMMES : UN MOUVEMENT IRRÉVERSIBLE", result.Paragraphs[0].Text);
@@ -44,7 +49,9 @@ namespace Toxy.Test
         public void TestParsePlainTextFromSample5()
         {
             string path = TestDataSample.GetPdfPath("Sample5.PDF");
-            var parser = new PDFTextParser(new ParserContext(path));
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Sample5.PDF", fileContent);
+            var parser = new PDFTextParser(context);
             string result = parser.Parse();
             string[] results = result.Split('\n');
             Assert.AreEqual("License income by market (%)", results[0]);
@@ -54,7 +61,9 @@ namespace Toxy.Test
         public void TestReadBigPDFFile()
         {
             string path = TestDataSample.GetPdfPath("Word97-2007BinaryFileFormat(doc)Specification.pdf");
-            var parser = new PDFTextParser(new ParserContext(path));
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Word97-2007BinaryFileFormat(doc)Specification.pdf", fileContent);
+            var parser = new PDFTextParser(context);
             string result = parser.Parse();
             Assert.IsTrue(true);
         }

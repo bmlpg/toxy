@@ -17,11 +17,13 @@ namespace Toxy.Parsers
         }
         public ToxyMetadata Parse()
         {
+            /*
             if (!System.IO.File.Exists(Context.Path))
                 throw new System.IO.FileNotFoundException("File " + Context.Path + " is not found");
+            */
 
             ToxyMetadata metadata=new ToxyMetadata();
-            using (Stream stream = File.OpenRead(Context.Path))
+            using (MemoryStream stream = new MemoryStream(Context.FileContent))
             {
                 POIFSFileSystem poifs = new NPOI.POIFS.FileSystem.POIFSFileSystem(stream);
                 DirectoryNode root=poifs.Root;

@@ -14,7 +14,8 @@ namespace Toxy.Test
         public void TestParseJpeg()
         {
             string path = Path.GetFullPath(TestDataSample.GetImagePath("sample_sony1.jpg"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("sample_sony1.jpg", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(12, x.Count);
@@ -32,7 +33,8 @@ namespace Toxy.Test
         public void TestParseJpegWithXmp()
         {
             string path = Path.GetFullPath(TestDataSample.GetImagePath("sample_nikon1.jpg"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("sample_nikon1.jpg", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(17, x.Count);
@@ -50,7 +52,8 @@ namespace Toxy.Test
         public void TestParseGifWithComment()
         {
             string path = Path.GetFullPath(TestDataSample.GetImagePath("sample_gimp.gif"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("sample_gimp.gif", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(4, x.Count);
@@ -63,7 +66,8 @@ namespace Toxy.Test
         public void TestParseTiff()
         {
             string path = Path.GetFullPath(TestDataSample.GetImagePath("sample_gimp.tiff"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("sample_gimp.tiff", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(97, x.Count);

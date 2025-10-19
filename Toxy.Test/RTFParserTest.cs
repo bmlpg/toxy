@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using ToxyFramework.Parsers;
 
@@ -14,7 +15,8 @@ namespace Toxy.Test
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             string path = TestDataSample.GetRTFPath("Formated text.rtf");
-            var context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("Formated text.rtf", fileContent);
             context.Encoding = Encoding.GetEncoding("windows-1252");
             var parser = new RTFTextParser(context);
             string result = parser.Parse();
@@ -30,7 +32,9 @@ namespace Toxy.Test
         public void TestReadRTF_Html()
         {
             string path = TestDataSample.GetRTFPath("htmlrtf2.rtf");
-            var parser = new RTFTextParser(new ParserContext(path));
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("htmlrtf2.rtf", fileContent);
+            var parser = new RTFTextParser(context);
             string result = parser.Parse();
             Assert.IsNotNull(result);
             Assert.IsTrue(result.Contains("Beste CMMA van Spelde,"));

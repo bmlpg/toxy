@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using ToxyFramework;
 
 namespace Toxy.Parsers
 {
@@ -13,10 +15,22 @@ namespace Toxy.Parsers
         }
         public ToxyMetadata Parse()
         {
+            /*
             if (!System.IO.File.Exists(Context.Path))
                 throw new System.IO.FileNotFoundException("File " + Context.Path + " is not found");
+            */
+
             ToxyMetadata metadatas = new ToxyMetadata();
-            TagLib.File file = TagLib.Audible.File.Create(Context.Path);
+            TagLib.File file = TagLib.Audible.File.Create(
+                new SimpleFileAbstraction(
+                    new SimpleFile(
+                        Context.FileName,
+                        new MemoryStream(
+                            Context.FileContent
+                        )
+                    )
+                )
+            );
             if (file.Properties.AudioSampleRate != 0)
                 metadatas.Add("AudioSampleRate", file.Properties.AudioSampleRate);
             if (file.Properties.AudioChannels != 0)

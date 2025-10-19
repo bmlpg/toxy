@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -12,7 +13,8 @@ namespace Toxy.Test
             [Test]
             public void TestParseDirectoryFromZip()
             {
-                ParserContext context = new ParserContext(TestDataSample.GetFilePath("toxy.zip",null));
+                byte[] fileContent = File.ReadAllBytes(TestDataSample.GetFilePath("toxy.zip", null));
+                ParserContext context = new ParserContext("toxy.zip", fileContent);
                 ITextParser parser = ParserFactory.CreateText(context);
                 string list = parser.Parse();
                 Assert.IsNotNull(list);

@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using System.IO;
 
 namespace Toxy.Test
 {
@@ -52,7 +53,8 @@ namespace Toxy.Test
         [Test]
         public void TestParseSheetIndexOutOfRange()
         {
-            ParserContext context = new ParserContext(TestDataSample.GetExcelPath("Formatting.xlsx"));
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("Formatting.xlsx"));
+            ParserContext context = new ParserContext("Formatting.xlsx", fileContent);
             ISpreadsheetParser parser = ParserFactory.CreateSpreadsheet(context);
             try
             {

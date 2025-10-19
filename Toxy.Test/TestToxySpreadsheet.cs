@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -12,8 +13,9 @@ namespace Toxy.Test
     {
         [Test]
         public void TestReadExcelAndConvertToDataSet()
-        { 
-            ParserContext c=new ParserContext(TestDataSample.GetExcelPath("Employee.xls"));
+        {
+            byte[] fileContent = File.ReadAllBytes(TestDataSample.GetExcelPath("Employee.xls"));
+            ParserContext c = new ParserContext("Employee.xls", fileContent);
             var parser=ParserFactory.CreateSpreadsheet(c);
             var spreadsheet= parser.Parse();
             DataSet ds = spreadsheet.ToDataSet();

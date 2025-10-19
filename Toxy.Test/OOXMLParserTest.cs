@@ -15,7 +15,8 @@ namespace Toxy.Test
         public void TestPptx()
         {
             string path = Path.GetFullPath(TestDataSample.GetOOXMLPath("SampleShow.pptx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("SampleShow.pptx", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(8, x.Count);
@@ -27,7 +28,8 @@ namespace Toxy.Test
         public void TestDocx()
         {
             string path = Path.GetFullPath(TestDataSample.GetOOXMLPath("MultipleCoreProperties.docx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("MultipleCoreProperties.docx", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(12, x.Count);
@@ -39,7 +41,8 @@ namespace Toxy.Test
         public void TestXlsx()
         {
             string path = Path.GetFullPath(TestDataSample.GetOOXMLPath("sample.xlsx"));
-            ParserContext context = new ParserContext(path);
+            byte[] fileContent = File.ReadAllBytes(path);
+            ParserContext context = new ParserContext("sample.xlsx", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
             Assert.AreEqual(4, x.Count);
