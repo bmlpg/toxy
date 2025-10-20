@@ -39,7 +39,7 @@ namespace Toxy.Parsers
                     if (!string.IsNullOrEmpty(card.ProductId))
                         sb.AppendFormat("[Product ID]{0}" + Environment.NewLine, card.ProductId);
                     if (!string.IsNullOrEmpty(card.Organization))
-                        sb.AppendFormat("[Orgnization]{0}" + Environment.NewLine, card.Organization);
+                        sb.AppendFormat("[Organization]{0}" + Environment.NewLine, card.Organization);
                     if (card.Sources.Count > 0)
                     {
                         sb.AppendLine("[Sources]");

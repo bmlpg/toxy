@@ -47,9 +47,9 @@ namespace Toxy.Parsers
                     {
                         tbc.Sources.Add(vSource.Uri.OriginalString);
                     }
-                    tbc.Orgnization = card.Organization;
+                    tbc.Organization = card.Organization;
                     tbc.Title = card.Title;
-                    tbc.Gender = card.Gender == Gender.Male ? GenderType.Male : GenderType.Female;
+                    tbc.Gender = (GenderType)((int)card.Gender);
                     if (card.Nicknames.Count > 0)
                     {
                         tbc.NickName = new ToxyName();

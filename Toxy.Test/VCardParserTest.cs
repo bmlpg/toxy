@@ -38,12 +38,12 @@ namespace Toxy.Test
             i++;
             Assert.AreEqual("http://home.earthlink.net/~fdawson", tbc1.Contacts[i].Value);
             Assert.AreEqual("Url-Default", tbc1.Contacts[i].Name);
-            Assert.AreEqual("Lotus Development Corporation", tbc1.Orgnization);
+            Assert.AreEqual("Lotus Development Corporation", tbc1.Organization);
 
             //2ed guy
             ToxyBusinessCard tbc2 = cards.Cards[1];
             Assert.AreEqual("Tim Howes", tbc2.Name.FullName);
-            Assert.AreEqual("Netscape Communications Corp.", tbc2.Orgnization);
+            Assert.AreEqual("Netscape Communications Corp.", tbc2.Organization);
             Assert.AreEqual(1, tbc2.Addresses.Count);
             Assert.AreEqual(3, tbc2.Contacts.Count);
             Assert.AreEqual("501 E. Middlefield Rd.;Mountain View;CA;94043;U.S.A.", tbc2.Addresses[0].ToString());

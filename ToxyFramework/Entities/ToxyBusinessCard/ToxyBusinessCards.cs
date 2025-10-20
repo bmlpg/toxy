@@ -79,7 +79,7 @@ namespace Toxy
                     i++;
                 }
                 row[i++] = card.Title;
-                row[i++] = card.Orgnization;
+                row[i++] = card.Organization;
                 foreach (var contact in card.Contacts)
                 {
                     row[i++] = contact.ToString();

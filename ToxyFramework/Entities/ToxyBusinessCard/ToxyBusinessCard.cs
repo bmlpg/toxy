@@ -8,9 +8,10 @@ namespace Toxy
 
 
     public enum GenderType
-    { 
-        Male,
-        Female
+    {
+        Unknown,
+        Female,
+        Male
     }
 
 
@@ -25,7 +26,7 @@ namespace Toxy
         }
         public ToxyName Name { get; set; }
         public ToxyName NickName { get; set; }
-        public string Orgnization { get; set; }
+        public string Organization { get; set; }
         public string Title { get; set; }
         public string Class { get; set; }
         public string TimeZone { get; set; }
@@ -51,11 +52,11 @@ namespace Toxy
             card.FamilyName = this.Name.LastName;
             card.GivenName = this.Name.FirstName;
             }
-            card.Gender = this.Gender== GenderType.Male?VCardReader.Gender.Male: VCardReader.Gender.Female;
+            card.Gender = (Gender)((int)this.Gender);
             if (this.NickName != null)
                 card.Nicknames.Add(this.NickName.FullName);
 
-            card.Organization = this.Orgnization;
+            card.Organization = this.Organization;
             if (this.Contacts != null)
             {
                 foreach (var contact in this.Contacts)
