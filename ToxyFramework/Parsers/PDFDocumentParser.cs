@@ -38,6 +38,8 @@ namespace Toxy.Parsers
                         rdoc.Paragraphs.Add(para);
                     }
                 }
+
+                rdoc.TotalPageNumber = reader.GetNumberOfPages();
             }
             return rdoc;
         }

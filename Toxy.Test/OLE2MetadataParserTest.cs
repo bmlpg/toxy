@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,16 +19,16 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("TestEditTime.doc", fileContent);
             IMetadataParser parser = ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(18, x.Count);
+            ClassicAssert.AreEqual(18, x.Count);
 
             path = Path.GetFullPath(TestDataSample.GetOLE2Path("TestChineseProperties.doc"));
             fileContent = File.ReadAllBytes(path);
             context = new ParserContext("TestChineseProperties.doc", fileContent);
             parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             x = parser.Parse();
-            Assert.AreEqual(18, x.Count);
-            Assert.AreEqual("雅虎網站分類", x.Get("Comments").Value);
-            Assert.AreEqual("參考資料", x.Get("Title").Value);
+            ClassicAssert.AreEqual(18, x.Count);
+            ClassicAssert.AreEqual("雅虎網站分類", x.Get("Comments").Value);
+            ClassicAssert.AreEqual("參考資料", x.Get("Title").Value);
         }
         [Test]
         public void TestExcelFile()
@@ -37,8 +38,8 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("comments.xls", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(8, x.Count);
-            Assert.AreEqual("Microsoft Excel", x.Get("ApplicationName").Value);
+            ClassicAssert.AreEqual(8, x.Count);
+            ClassicAssert.AreEqual("Microsoft Excel", x.Get("ApplicationName").Value);
         }
         [Test]
         public void TestPowerPoint()
@@ -48,8 +49,8 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("Test_Humor-Generation.ppt", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(8, x.Count);
-            Assert.AreEqual("Funny Factory", x.Get("Title").Value);
+            ClassicAssert.AreEqual(8, x.Count);
+            ClassicAssert.AreEqual("Funny Factory", x.Get("Title").Value);
         }
         [Test]
         public void TestCorelDrawFile()
@@ -59,9 +60,9 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("TestCorel.shw", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(6, x.Count);
-            Assert.AreEqual("thorsteb", x.Get("Author").Value);
-            Assert.AreEqual("thorsteb", x.Get("LastAuthor").Value);
+            ClassicAssert.AreEqual(6, x.Count);
+            ClassicAssert.AreEqual("thorsteb", x.Get("Author").Value);
+            ClassicAssert.AreEqual("thorsteb", x.Get("LastAuthor").Value);
         }
         [Test]
         public void TestSolidWorksFile()
@@ -71,9 +72,9 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("TestSolidWorks.sldprt", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(10, x.Count);
-            Assert.AreEqual("{F29F85E0-4FF9-1068-AB91-08002B27B3D9}", x.Get("ClassID").Value);
-            Assert.AreEqual("scj", x.Get("LastAuthor").Value);
+            ClassicAssert.AreEqual(10, x.Count);
+            ClassicAssert.AreEqual("{F29F85E0-4FF9-1068-AB91-08002B27B3D9}", x.Get("ClassID").Value);
+            ClassicAssert.AreEqual("scj", x.Get("LastAuthor").Value);
         }
     }
 }

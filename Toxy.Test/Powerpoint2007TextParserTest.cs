@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,14 +19,14 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("testPPT.pptx", fileContent);
             ITextParser parser = ParserFactory.CreateText(context);
             string result = parser.Parse();
-            Assert.IsNotNull(result);
-            Assert.IsNotEmpty(result);
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.IsNotEmpty(result);
             string[] texts = result.Split(new string[]{"\r\n"}, StringSplitOptions.RemoveEmptyEntries);
-            Assert.AreEqual(14, texts.Length);
-            Assert.AreEqual("Attachment Test", texts[0]);
-            Assert.AreEqual("Rajiv", texts[1]);
-            Assert.AreEqual("Different words to test against", texts[4]);
-            Assert.AreEqual("Hello", texts[7]);
+            ClassicAssert.AreEqual(14, texts.Length);
+            ClassicAssert.AreEqual("Attachment Test", texts[0]);
+            ClassicAssert.AreEqual("Rajiv", texts[1]);
+            ClassicAssert.AreEqual("Different words to test against", texts[4]);
+            ClassicAssert.AreEqual("Hello", texts[7]);
         }
     }
 }

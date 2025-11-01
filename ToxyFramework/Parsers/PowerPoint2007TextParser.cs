@@ -83,15 +83,9 @@ namespace Toxy.Parsers
                 }
             }
 
-            if (texts.Count > 0)
-            {
-                // Return an array of strings.
-                return texts.ToArray();
-            }
-            else
-            {
-                return null;
-            }
+            // Return an array of strings.
+            return texts.ToArray();
+            
         }
     }
 }

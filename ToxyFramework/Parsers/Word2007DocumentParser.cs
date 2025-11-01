@@ -91,6 +91,9 @@ namespace Toxy.Parsers
                         }
                     }
                 }
+
+                rdoc.TotalPageNumber = worddoc.GetProperties().ExtendedProperties.Pages;
+
             }
             return rdoc;
         }

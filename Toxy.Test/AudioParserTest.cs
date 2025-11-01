@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample_both.mp3", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(15, x.Count);
+            ClassicAssert.AreEqual(15, x.Count);
         }
         [Test]
         public void TestParseMp3_Id3v1Only()
@@ -28,7 +29,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample_v1_only.mp3", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(11, x.Count);
+            ClassicAssert.AreEqual(11, x.Count);
         }
         [Test]
         public void TestParseMp3_Id3v2Only()
@@ -38,7 +39,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample_v2_only.mp3", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(15, x.Count);
+            ClassicAssert.AreEqual(15, x.Count);
         }
         [Test]
         public void TestParseApe()
@@ -48,7 +49,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample.ape", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(15, x.Count);
+            ClassicAssert.AreEqual(15, x.Count);
 
         }
         [Test]
@@ -59,7 +60,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample.wma", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(17, x.Count);
+            ClassicAssert.AreEqual(17, x.Count);
         }
         [Test]
         public void TestParseFlac()
@@ -69,7 +70,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("sample.flac", fileContent);
             IMetadataParser parser = (IMetadataParser)ParserFactory.CreateMetadata(context);
             ToxyMetadata x = parser.Parse();
-            Assert.AreEqual(16, x.Count);
+            ClassicAssert.AreEqual(16, x.Count);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,7 @@ namespace Toxy.Test
     {
         void ContainText(string result, string text)
         {
-            Assert.IsTrue(result.IndexOf(text) > 0);
+            ClassicAssert.IsTrue(result.IndexOf(text) > 0);
         }
         [Test]
         public void TestParsePlainTextFromSample1()
@@ -23,7 +24,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("Sample1.PDF", fileContent);
             var parser = new PDFTextParser(context);
             string result = parser.Parse();
-            Assert.IsTrue(result.StartsWith("LA MARCHE"));
+            ClassicAssert.IsTrue(result.StartsWith("LA MARCHE"));
             ContainText(result, "Toute discussion stratégique sur nos actions nécessite un rappel de ce que nous avons fait en");
             ContainText(result, "l’an 2000 et depuis. Au niveau mondial, en l’an 2000, nous avons mené une campagne de");
             ContainText(result, "Une structure pour nous amener à 2005");
@@ -38,12 +39,12 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("Sample1.PDF", fileContent);
             var parser = new PDFDocumentParser(context);
             var result = parser.Parse();
-            Assert.AreEqual(1474, result.Paragraphs.Count);
-            Assert.AreEqual("LA MARCHE MONDIALE DES FEMMES : UN MOUVEMENT IRRÉVERSIBLE", result.Paragraphs[0].Text);
-            Assert.AreEqual("DOCUMENT PRÉPARATOIRE", result.Paragraphs[1].Text);
-            Assert.AreEqual("e", result.Paragraphs[2].Text);    //this is the superscript 'e'
-            Assert.AreEqual("4 Rencontre internationale de la Marche mondiale des femmes", result.Paragraphs[3].Text);
-            Assert.AreEqual("du 18-22 Mars 2003", result.Paragraphs[4].Text);
+            ClassicAssert.AreEqual(1474, result.Paragraphs.Count);
+            ClassicAssert.AreEqual("LA MARCHE MONDIALE DES FEMMES : UN MOUVEMENT IRRÉVERSIBLE", result.Paragraphs[0].Text);
+            ClassicAssert.AreEqual("DOCUMENT PRÉPARATOIRE", result.Paragraphs[1].Text);
+            ClassicAssert.AreEqual("e", result.Paragraphs[2].Text);    //this is the superscript 'e'
+            ClassicAssert.AreEqual("4 Rencontre internationale de la Marche mondiale des femmes", result.Paragraphs[3].Text);
+            ClassicAssert.AreEqual("du 18-22 Mars 2003", result.Paragraphs[4].Text);
         }
         [Test]
         public void TestParsePlainTextFromSample5()
@@ -54,8 +55,8 @@ namespace Toxy.Test
             var parser = new PDFTextParser(context);
             string result = parser.Parse();
             string[] results = result.Split('\n');
-            Assert.AreEqual("License income by market (%)", results[0]);
-            Assert.AreEqual("Philadelphia, Atlanta, Dallas, San Diego, and New",results[1]);
+            ClassicAssert.AreEqual("License income by market (%)", results[0]);
+            ClassicAssert.AreEqual("Philadelphia, Atlanta, Dallas, San Diego, and New",results[1]);
         }
         [Test]
         public void TestReadBigPDFFile()
@@ -65,7 +66,7 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("Word97-2007BinaryFileFormat(doc)Specification.pdf", fileContent);
             var parser = new PDFTextParser(context);
             string result = parser.Parse();
-            Assert.IsTrue(true);
+            ClassicAssert.IsTrue(true);
         }
     }
 }

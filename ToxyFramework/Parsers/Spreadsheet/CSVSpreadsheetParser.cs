@@ -1,10 +1,11 @@
-﻿using CsvHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace Toxy.Parsers
 {
@@ -45,10 +46,10 @@ namespace Toxy.Parsers
                 if (sHasHeader == "1" || sHasHeader == "on" || sHasHeader == "true")
                     extractHeader = true;
             }
-            char delimiter =',';
-            if (Context.Properties.ContainsKey("delimiter"))
+            string delimiter = ",";
+            if (Context.Properties.ContainsKey("Delimiter"))
             {
-                delimiter = Context.Properties["delimiter"][0];
+                delimiter = Context.Properties["Delimiter"];
             }
 
             
@@ -63,30 +64,41 @@ namespace Toxy.Parsers
                 }
                 else
                 {
-                    sr = new StreamReader(new MemoryStream(Context.FileContent), true);
+                    sr = new StreamReader(new MemoryStream(Context.FileContent), Context.Encoding);
                 }
-                var reader=new CsvReader(sr, CultureInfo.InvariantCulture);
-                if (extractHeader)
+
+                CsvConfiguration config = new CsvConfiguration(CultureInfo.InvariantCulture)
                 {
-                    reader.Read();
-                    reader.ReadHeader();
-                }
-                string[] headers = reader.HeaderRecord;
+                    Delimiter = delimiter,
+                };
+
+                var reader=new CsvReader(sr, config);
+
                 ToxySpreadsheet ss = new ToxySpreadsheet();
                 ToxyTable t1 = new ToxyTable();
                 ss.Tables.Add(t1);
 
                 int i = 0;
-                if (headers!=null&&headers.Length > 0)
+
+                if (extractHeader)
                 {
-                    t1.HeaderRows.Add(new ToxyRow(i));
-                    i++;
+                    reader.Read();
+                    reader.ReadHeader();
+
+                    string[] headers = reader.HeaderRecord;
+
+                    if (headers != null && headers.Length > 0)
+                    {
+                        t1.HeaderRows.Add(new ToxyRow(i));
+                        i++;
+                    }
+                    for (int j = 0; j < headers.Length; j++)
+                    {
+                        t1.HeaderRows[0].Cells.Add(new ToxyCell(j, headers[j]));
+                        t1.LastColumnIndex = t1.HeaderRows[0].Cells.Count - 1;
+                    }
                 }
-                for (int j = 0; j < headers.Length;j++ )
-                {
-                    t1.HeaderRows[0].Cells.Add(new ToxyCell(j, headers[j]));
-                    t1.LastColumnIndex = t1.HeaderRows[0].Cells.Count-1;
-                }
+
                 while(reader.Read())
                 {
                     ToxyRow tr=new ToxyRow(i);

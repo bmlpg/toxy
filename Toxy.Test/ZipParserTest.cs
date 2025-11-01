@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,9 +18,9 @@ namespace Toxy.Test
                 ParserContext context = new ParserContext("toxy.zip", fileContent);
                 ITextParser parser = ParserFactory.CreateText(context);
                 string list = parser.Parse();
-                Assert.IsNotNull(list);
+                ClassicAssert.IsNotNull(list);
                 string[] lines = list.Split(new string[]{Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-                Assert.AreEqual(68, lines.Length);
+                ClassicAssert.AreEqual(68, lines.Length);
             }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,12 +22,12 @@ namespace Toxy.Test
             var parser = new RTFTextParser(context);
             string result = parser.Parse();
             string[] lines = result.Replace("\r\n", "\n").Split('\n');
-            Assert.AreEqual(lines.Length, 10);
-            Assert.AreEqual("11111111111", lines[0]);
-            Assert.AreEqual("22222222222", lines[1]);
-            Assert.AreEqual("RTF Sample , Author : yuans , contact : yyf9989@hotmail.com , site : http://www.cnblogs.com/xdesigner .", lines[7]);
+            ClassicAssert.AreEqual(lines.Length, 10);
+            ClassicAssert.AreEqual("11111111111", lines[0]);
+            ClassicAssert.AreEqual("22222222222", lines[1]);
+            ClassicAssert.AreEqual("RTF Sample , Author : yuans , contact : yyf9989@hotmail.com , site : http://www.cnblogs.com/xdesigner .", lines[7]);
 
-            Assert.AreEqual("张三李四王五", lines[2]); //encoding issue
+            ClassicAssert.AreEqual("张三李四王五", lines[2]); //encoding issue
         }
         [Test]
         public void TestReadRTF_Html()
@@ -36,8 +37,8 @@ namespace Toxy.Test
             ParserContext context = new ParserContext("htmlrtf2.rtf", fileContent);
             var parser = new RTFTextParser(context);
             string result = parser.Parse();
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Contains("Beste CMMA van Spelde,"));
+            ClassicAssert.IsNotNull(result);
+            ClassicAssert.IsTrue(result.Contains("Beste CMMA van Spelde,"));
         }
     }
 }
