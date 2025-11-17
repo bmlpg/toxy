@@ -63,7 +63,9 @@ namespace Toxy.Parsers
 
                     //}
                     rdoc.Paragraphs.Add(p);
-                }               
+                }
+
+                rdoc.TotalPageNumber = worddoc.SummaryInformation.PageCount;
             }
             return rdoc;
         }
