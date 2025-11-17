@@ -15,10 +15,12 @@ namespace Toxy.Parsers
         }
         public string Parse()
         {
+            /*
             if (!File.Exists(Context.Path))
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
+            */
             StringBuilder sb = new StringBuilder();
-            using (FileStream stream = File.OpenRead(Context.Path))
+            using(MemoryStream stream = new MemoryStream(Context.FileContent))
             {
                 HWPFDocument worddoc = new HWPFDocument(stream);
                 return worddoc.GetRange().Text;
