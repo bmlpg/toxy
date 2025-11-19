@@ -1,10 +1,7 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Toxy.Parsers
 {
@@ -25,11 +22,11 @@ namespace Toxy.Parsers
             ToxyDocument rdoc = new ToxyDocument();
             ITextExtractionStrategy its = new LocationTextExtractionStrategy();
 
-            using (PdfDocument reader = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
+            using (PdfDocument document = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
             {
-                for (int i = 1; i <= reader.GetNumberOfPages(); i++)
+                for (int i = 1; i <= document.GetNumberOfPages(); i++)
                 {
-                    string thePage = PdfTextExtractor.GetTextFromPage(reader.GetPage(i), its);
+                    string thePage = PdfTextExtractor.GetTextFromPage(document.GetPage(i), its);
                     string[] theLines = thePage.Split('\n');
                     foreach (var theLine in theLines)
                     {
@@ -39,7 +36,7 @@ namespace Toxy.Parsers
                     }
                 }
 
-                rdoc.TotalPageNumber = reader.GetNumberOfPages();
+                rdoc.TotalPageNumber = document.GetNumberOfPages();
             }
             return rdoc;
         }

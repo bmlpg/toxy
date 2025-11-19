@@ -1,8 +1,6 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -21,14 +19,14 @@ namespace Toxy.Parsers
                 throw new FileNotFoundException("File " + Context.Path + " is not found");
             */
 
-            using (PdfDocument reader = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
+            using (PdfDocument document = new PdfDocument(new PdfReader(new MemoryStream(Context.FileContent))))
             {
                 StringBuilder text = new StringBuilder();
 
-                for (int i = 1; i <= reader.GetNumberOfPages(); i++)
+                for (int i = 1; i <= document.GetNumberOfPages(); i++)
                 {
                     ITextExtractionStrategy its = new LocationTextExtractionStrategy();
-                    string thePage = PdfTextExtractor.GetTextFromPage(reader.GetPage(i), its);
+                    string thePage = PdfTextExtractor.GetTextFromPage(document.GetPage(i), its);
                     text.AppendLine(thePage);
                 }
                 return text.ToString();
